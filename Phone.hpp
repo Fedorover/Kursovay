@@ -17,7 +17,7 @@ class Phone {
 private:
     static Phone *phone;
     
-    int size;
+    int size; 
     Device **devices;
     
     Phone();

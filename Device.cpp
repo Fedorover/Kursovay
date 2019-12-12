@@ -13,13 +13,7 @@
 
 using namespace std;
 
-const string &Device::getGps() const {
-    return gps;
-}
 
-void Device::setGps(const string &gps) {
-    Device::gps = gps;
-}
 
 int Device::getYear() const {
     return year;
@@ -27,6 +21,24 @@ int Device::getYear() const {
 
 void Device::setYear(int year) {
     Device::year = year;
+}
+
+int Device::getSizescreen() const {
+    return sizescreen;
+}
+
+void Device::setSizescreen(int sizescreen) {
+    Device::sizescreen = sizescreen;
+}
+
+
+
+int Device::getProductivity() const {
+    return productivity;
+}
+
+void Device::setProductivity(int productivity) {
+    Device::productivity = productivity;
 }
 
 const string &Device::getColor() const {
@@ -37,20 +49,21 @@ void Device::setColor(const string &color) {
     Device::color = color;
 }
 
-const string &Device::getGlonass() const {
-    return glonass;
-}
 
-void Device::setGlonass(const string &glonass) {
-    Device::glonass = glonass;
-}
 
 Device::~Device() {
     color = "";
-    gps = "";
+   // gps = "";
     year = 0;
     color = "";
-    glonass = "";
+    //glonass = "";
+     sizescreen=0;
+    // memory=0;
+     productivity=0;
+    keypad="";
+     sensor="";
+     connection="";
+    fourg="";
 }
 
 const string &Device::getWifi() const {
@@ -61,17 +74,48 @@ void Device::setWifi(const string &wifi) {
     Device::wifi = wifi;
 }
 
-Device::Device(const string &gps, int year, const string &color, const string &glonass, const string &wifi)
-: gps(gps), year(year), color(color), glonass(glonass), wifi(wifi) {}
+const string &Device::getFourg() const {
+    return fourg;
+}
+
+void Device::setFourg(const string &fourg) {
+    Device::fourg = fourg;
+}
+
+const string &Device::getKeypad() const {
+    return keypad;
+}
+
+void Device::setKeypad(const string &keypad) {
+    Device::keypad = keypad;
+}
+const string &Device::getSensor() const {
+    return sensor;
+}
+
+void Device::setSensor(const string &sensor) {
+    Device::sensor = sensor;
+}
+const string &Device::getConnection() const {
+    return connection;
+}
+
+void Device::setConnection(const string &connection) {
+    Device::connection = connection;
+}
+
+
+
+Device::Device( int year, const string &color,  const string &wifi, const string &fourg, int sizescreen, int productivity, const string &keypad, const string &sensor,const string &connection ) {}
 
 ostream &operator<<(ostream &os, const Device &device) {
-    os << "Наличие GPS: " << device.gps << " год производства: " << device.year << " цвет: " << device.color << " наличие глонасс: "
-    << device.glonass << " наличие wifi: " << device.wifi;
+    os  << " Год производства: " << device.year << " цвет: " << device.color << " наличие wifi: " << device.wifi
+    << ""<<device.fourg <<""<<device.sensor<<""<<device.connection<<""<<device.keypad<<""<<device.productivity<<""<<device.sizescreen;
     return os;
 }
 
 void Device::writeToFile(ostream &file) {
-    file << gps << endl << year << endl << color << endl << glonass << endl << wifi << endl;
+    file << year << endl << color  << endl << wifi  << endl << sensor << endl << wifi << endl;
 }
 
 void Device::readFromFile(istream &file) {
@@ -85,34 +129,32 @@ void Device::readFromFile(istream &file) {
     file >> glonass;
     string wifi;
     file >> wifi;
-    this->gps = gps;
+    
     this->year = year;
     this->color = color;
-    this->glonass = glonass;
+   
     this->wifi = wifi;
     
 }
 
 istream &operator>>(istream &in, Device &device) {
-    cout << "Введите наличие GPS: " << endl;
-    string gps;
-    in >> gps;
+    
+   
     cout << "Введите год производства:" << endl;
     int year;
     in >> year;
     cout << "Введите цвет" << endl;
     string color;
     in >> color;
-    cout << "Введите наличие глонасс: " << endl;
-    string glonass;
-    in >> glonass;
+ 
+  
     cout << "Введите наличие wifi: " << endl;
     string wifi;
     in >> wifi;
-    device.gps = gps;
+
     device.year = year;
     device.color = color;
-    device.glonass = glonass;
+
     device.wifi = wifi;
     return in;
 }

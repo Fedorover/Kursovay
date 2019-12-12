@@ -17,14 +17,13 @@ using namespace std;
 
 class Device {
 private:
-    string gps;//наличие gps
+   // string gps;//наличие gps
     int year;//год производства
     string color;//цвет
-    string glonass;//глонас
     string wifi;//вифи
     string fourg;//4g
     int sizescreen;
-    int memory;
+   //int memory;
     int productivity;
     string keypad;
     string sensor;
@@ -35,29 +34,56 @@ public:
     virtual void readFromFile(istream &file);
     virtual string getFilename() = 0;
     
-    Device(const string &gps, int year, const string &color, const string &glonass, const string &wifi);
+    Device( int year, const string &color, const string &wifi, const string &fourg, int sizescreen, int productivity, const string &keypad, const string &sensor,const string &connection );
+      virtual ~Device();
     
-    const string &getGps() const;
+
+    
+    const string &getKeypad() const;
+    
+    const string &getSensor() const;
+    
+    const string &getConnection() const;
     
     const string &getWifi() const;
     
+    const string &getFourg() const;
+    
     void setWifi(const string &wifi);
     
-    virtual ~Device();
+  
+    void setFourg(const string &fourg);
     
-    void setGps(const string &gps);
+    void setKeypad(const string &keypad);
+    
+    void setSensor(const string &sensor);
+    
+    void setConnection(const string &connection);
     
     int getYear() const;
     
+    int getSizescreen() const;
+    
+   //int getMemory() const;
+    
+    int getProductivity() const;
+    
     void setYear(int year);
+    
+    void setSizescreen(int sizescreen);
+    
+   // void setMemory(int memory);
+    
+    void setProductivity(int productivity);
+    
     
     const string &getColor() const;
     
     void setColor(const string &color);
     
-    const string &getGlonass() const;
+    //const string &getGlonass() const;
     
-    void setGlonass(const string &glonass);
+    //void setGlonass(const string &glonass);
     
     virtual void toConsole();
     
