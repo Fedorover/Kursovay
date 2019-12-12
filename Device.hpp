@@ -17,7 +17,7 @@ using namespace std;
 
 class Device {
 private:
-   // string gps;//наличие gps
+   
     int year;//год производства
     string color;//цвет
     string wifi;//вифи

@@ -13,10 +13,10 @@
 
 
 
-#include "MFU.h"
-#include "Printer.h"
-#include "Scanner.h"
-#include "GraphicPad.h"
+#include "smartphone.hpp"
+#include "homephone.hpp"
+#include "satellitephone.hpp"
+
 
 using namespace std;
 
@@ -87,13 +87,30 @@ Phone &Phone::remove(int index) {
 
 void Phone::writeToFile() {
     const string files[] = {
-        "mfu.txt", "scanner.txt", "printer.txt", "graphicPad.txt"
+        "smartphone.txt", "homephone.txt", "satellitephone.txt"
     };
-    const int length = 4;
-    for (int j = 0; j < 4; ++j) {
-        ofstream file;
-        int count = 0;
-        file.open(files[j], ios_base::out);
+    const int length = 3;
+    for (int j = 0; j < 3; ++j) {
+        ofstream file;//создаем обьект класса ofstream
+        int count = 0;// счетчик
+        
+        
+        try//ИСКЛЮЧЕНИЕ
+        {
+            file.open(files[j], ios_base::out);// ios_base::out - для того чтобы не удалялось предыдущее
+
+            if (!file.is_open()) // если файл не открыт
+            {
+                throw 123 ;   //переходим  для обработки ошибки
+            }
+            cout << "Успешное открытие файла\n" << endl;
+        
+        }
+        catch (int)//ЛОВИМ ИСКЛЮЧЕНИЕ
+        {
+            cout << " Такого файла не существует\n" << endl;
+        }
+        
         for (int i = 0; i < size; ++i) {
             if (devices[i]->getFilename() == files[j]) {
                 count++;
@@ -106,43 +123,79 @@ void Phone::writeToFile() {
                 file << endl;
             }
         }
-        file.close();
-    }
+        
+        try
+        {
+            file.close();
+            cout << "Файл закрыт" << endl;
+        }
+        catch (const exception& exc)
+        {
+            cout << " Закрыть файл не удалось. Такого файла не существует" << endl;
+        }
+            }
 }
 
 void Phone::readFromFile() {
     const string files[] = {
-        "mfu.txt", "scanner.txt", "printer.txt", "graphicPad.txt"
+        "smartphone.txt", "homephone.txt", "satellitephone.txt"
     };
-    for (int j = 0; j < 4; ++j) {
+    for (int j = 0; j < 3; ++j) {
         ifstream is;
-        is.open(files[j], ios_base::in);
+        
+        
+        try//ИСКЛЮЧЕНИЕ
+        {
+           is.open(files[j], ios_base::in);// ios_base::out - для того чтобы не удалялось предыдущее
+            
+            if (!is.is_open()) // если файл не открыт
+            {
+                throw 123 ;   //переходим  для обработки ошибки
+            }
+            cout << "Успешное открытие файла\n" << endl;
+        }
+        catch (int)//ЛОВИМ ИСКЛЮЧЕНИЕ
+        {
+            cout << " Такого файла не существует\n" << endl;
+        }
+        
+        
         int size;
         is >> size;
         for (int i = 0; i < size; ++i) {
             string currentDevice;
             is >> currentDevice;
-            if (currentDevice == "mfu") {
-                MFU *mfu = new MFU();
+            if (currentDevice == "smartphone") {
+                Smartphone *mfu = new Smartphone();
                 mfu->readFromFile(is);
                 this->add(*mfu);
             }
-            if (currentDevice == "printer") {
-                Printer *p = new Printer();
+            if (currentDevice == "homephone") {
+                Homephone *p = new Homephone();
                 p->readFromFile(is);
                 this->add(*p);
             }
-            if (currentDevice == "scanner") {
-                Scanner *sc = new Scanner();
+            if (currentDevice == "satellitephone") {
+                Satellitephone *sc = new Satellitephone();
                 sc->readFromFile(is);
                 this->add(*sc);
             }
-            if (currentDevice == "graphicPad") {
-                GraphicPad *gp = new GraphicPad();
-                gp->readFromFile(is);
-                this->add(*gp);
+            
             }
+        
+        try
+        {
+            if(!is.is_open()){
+                throw 12;
+            }
+            is.close();
+            cout << "Файл закрыт" << endl;
         }
-        is.close();
+        catch (int)
+        {
+            cout << " Закрыть файл не удалось. " << endl;
+        }
     }
-}
+    
+    }
+

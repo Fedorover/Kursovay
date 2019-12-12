@@ -110,52 +110,106 @@ Device::Device( int year, const string &color,  const string &wifi, const string
 
 ostream &operator<<(ostream &os, const Device &device) {
     os  << " Год производства: " << device.year << " цвет: " << device.color << " наличие wifi: " << device.wifi
-    << ""<<device.fourg <<""<<device.sensor<<""<<device.connection<<""<<device.keypad<<""<<device.productivity<<""<<device.sizescreen;
+    << " наличие 4G: "<<device.fourg <<" наличие сенсора : "<<device.sensor<<" тип связи: "<<device.connection<<" наличие клавиатуры: "<<device.keypad<<" производительность: "<< device.productivity <<" размер экрана: "<<device.sizescreen;
     return os;
 }
 
 void Device::writeToFile(ostream &file) {
-    file << year << endl << color  << endl << wifi  << endl << sensor << endl << wifi << endl;
+    file << year << endl << color  << endl << wifi << endl << fourg  << endl << sensor << endl << connection << endl << keypad << endl << productivity << endl<< sizescreen << endl ;
 }
 
 void Device::readFromFile(istream &file) {
-    string gps;
-    file >> gps;
     int year;
     file >> year;
+    
     string color;
     file >> color;
-    string glonass;
-    file >> glonass;
+    
+
     string wifi;
     file >> wifi;
+    
+    string fourg;
+    file >>fourg;
+    
+    string sensor;
+    file >>sensor;
+    
+    string connection;
+    file >>connection;
+    
+    string keypad;
+    file >>keypad;
+    
+    int productivity;
+    file >> productivity;
+    
+    int sizescreen;
+    file >> sizescreen;
+    
     
     this->year = year;
     this->color = color;
    
     this->wifi = wifi;
     
+    this->fourg = fourg;
+    this->sensor = sensor;
+    
+    this->connection = connection;
+    
+    this->productivity =productivity;
+    this->keypad = keypad;
+    
+    this->sizescreen = sizescreen;
+    
 }
 
 istream &operator>>(istream &in, Device &device) {
     
    
-    cout << "Введите год производства:" << endl;
+    cout << "Введите год производства: " << endl;
     int year;
     in >> year;
-    cout << "Введите цвет" << endl;
+    cout << "Введите цвет: " << endl;
     string color;
     in >> color;
- 
-  
     cout << "Введите наличие wifi: " << endl;
     string wifi;
     in >> wifi;
+    cout << "Наличие 4G: " << endl;
+    string fourg;
+    in >> fourg;
+    cout << "Наличие сенсора: " << endl;
+    string sensor;
+    in >> sensor;
+    cout << "Тип связи: " << endl;
+    string connection;
+    in >> connection;
+    cout << "Наличие клавиатуры: " << endl;
+    string keypad;
+    in >> keypad;
+    cout << "Введите производительность: " << endl;
+    int productivity;
+    in >> productivity;
+    cout << "Введите размер экрана: " << endl;
+    int sizescreen;
+    in >> sizescreen;
 
+    
+    
     device.year = year;
     device.color = color;
-
     device.wifi = wifi;
+    device.fourg = fourg;
+    device.sensor = sensor;
+    device.connection = connection;
+    device.keypad = keypad;
+    device.productivity = productivity;
+    device.sizescreen = sizescreen;
+    
+    
+    
     return in;
 }
 
